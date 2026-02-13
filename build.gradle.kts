@@ -5,3 +5,6 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.kotlin.serialization) apply false
 }
+
+//Coil implementation
+//implementation("io.coil-kt.coil3:coil-compose:3.3.0")
