@@ -62,10 +62,6 @@ fun affichageUnFilm(idFilm : Long, nomFilm : String?, URL : String?, Genres : Li
             }
         }
 
-        //Button(onClick = { backStack.add(GameExample(idFilm)) }) {
-          //  Text(text = "->")
-        //}
-
     }
 }
 
@@ -85,17 +81,35 @@ fun affichageTousFilms(pad: PaddingValues,backStack : SnapshotStateList<Any>,onG
 
 
 @Composable
-fun ecranSecondaire(identifiant : Long,pad: PaddingValues,backStack: SnapshotStateList<Any>){
+fun ecranSecondaire(identifiant: Long, pad: PaddingValues, backStack: SnapshotStateList<Any>) {
     Row(
         modifier = Modifier
             .padding(pad)
             .fillMaxWidth()
             .clip(RoundedCornerShape(size = 25.dp))
             .background(Color.LightGray)
+    ) {
+        games.find { it.id == identifiant }?.name?.let { Text(it) }
+    } // titre
 
-    ){
-        Text(identifiant.toString(),fontSize=24.sp)
-    }
+    Row(
+        modifier = Modifier
+            .padding(pad)
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(size = 25.dp))
+            .background(Color.LightGray)
+    ) {
+        Column {
+            AsyncImage(
+                model = "https:" + games.find { it.id == identifiant }?.cover,
+                modifier = Modifier.size(70.dp),
+                contentDescription = null
+            )
+        }
+    } // cover
+
+
+
 }
 
 
