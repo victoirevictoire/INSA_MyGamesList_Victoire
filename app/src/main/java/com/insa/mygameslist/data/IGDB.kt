@@ -4,7 +4,6 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.insa.mygameslist.R
-import okhttp3.internal.platform.Platform
 
 //Objet chargé de charger et stocker les données IGDB nécessaires à l'application.
 //Ici, il ne gère que la liste des couvertures (covers).
@@ -47,14 +46,11 @@ object IGDB {
             object : TypeToken<List<Platform>>() {}.type
         )
 
-
         covers = coversFromJson
         games=gamesFromJson
         genres=genresFromJson
         platform_logos=platformlogosFromJson
         platforms=platformsFromJson
-
-
     }
 }
 
@@ -67,5 +63,5 @@ data class Genre(val id:Long, val name : String)
 
 data class Platform_logo (val id:Long, val url : String)
 
-data class Platform (val id:Long, val name : String, val platform_logos : Long)
+data class Platform (val id:Long, val name : String, val platform_logo : Long)
 
