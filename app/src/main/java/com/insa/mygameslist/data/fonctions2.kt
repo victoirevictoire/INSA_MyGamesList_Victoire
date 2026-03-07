@@ -27,7 +27,9 @@ import com.insa.mygameslist.data.IGDB.games
 import com.insa.mygameslist.data.IGDB.genres
 import com.insa.mygameslist.data.IGDB.platforms
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.draw.clip
@@ -99,7 +101,8 @@ fun ecranSecondaire(identifiant: Long, pad: PaddingValues, backStack: SnapshotSt
         modifier = Modifier
             .padding(top = pad.calculateTopPadding())
             .fillMaxWidth()
-            .background(Color.LightGray)
+            .background(Color.White)
+            .verticalScroll(rememberScrollState())
     ) {
 
         //NOM DU JEU
@@ -128,7 +131,7 @@ fun ecranSecondaire(identifiant: Long, pad: PaddingValues, backStack: SnapshotSt
 
         // GENRE DU JEU
         Spacer(modifier = Modifier.height(20.dp))
-        var genres1 = game1?.genres
+        val genres1 = game1?.genres
         var stringGenres = ""
         if (genres1 != null) {
             for (idGenre in genres1) {
@@ -136,6 +139,8 @@ fun ecranSecondaire(identifiant: Long, pad: PaddingValues, backStack: SnapshotSt
                 stringGenres += ", "
             }
         }
+        stringGenres=stringGenres.removeSuffix(", ")
+
         Text(
             stringGenres,
             modifier = Modifier.fillMaxWidth(),
@@ -171,6 +176,7 @@ fun ecranSecondaire(identifiant: Long, pad: PaddingValues, backStack: SnapshotSt
         }
 
         //DESCRIPTION DU JEU
+
         Spacer(modifier = Modifier.height(20.dp))
         FlowRow {
             game1?.summary?.let {

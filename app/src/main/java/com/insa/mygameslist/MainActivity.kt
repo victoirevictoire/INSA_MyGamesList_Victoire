@@ -1,5 +1,4 @@
 package com.insa.mygameslist
-
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,6 +12,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
@@ -25,7 +25,7 @@ import androidx.compose.ui.res.stringResource
 import com.insa.mygameslist.data.GameExample
 import com.insa.mygameslist.data.IGDB
 import com.insa.mygameslist.data.IGDB.games
-import com.insa.mygameslist.data.IGDB.genres
+import com.insa.mygameslist.data.SearchBar
 import com.insa.mygameslist.data.MyApp
 import com.insa.mygameslist.data.affichageTousFilms
 import com.insa.mygameslist.data.ecranSecondaire
@@ -33,7 +33,6 @@ import com.insa.mygameslist.ui.theme.MyGamesListTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         IGDB.load(this)
@@ -51,7 +50,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MonBeauScaffoldRoiDsScaffolds(backStack:SnapshotStateList<Any>) {
     Scaffold(
-        topBar = {
+
+       /* topBar = {
             // Barre supérieure de l'application
             TopAppBar(
                 colors = topAppBarColors(
@@ -59,16 +59,15 @@ fun MonBeauScaffoldRoiDsScaffolds(backStack:SnapshotStateList<Any>) {
                     titleContentColor = Color.Black, // Couleur du texte du titre
                 ),
                 title = { Text("My Games List") })  // Titre affiché dans la top bar
-        },
+        }*/
+
         contentWindowInsets = WindowInsets.systemBars,
         modifier = Modifier
             .fillMaxSize() // Le Scaffold occupe tout l'écran
             .background(Color(android.graphics.Color.parseColor("#BFCAF2")))
     ) { innerPadding ->
-        // Text("À remplir", modifier = Modifier.padding(innerPadding))
-        //Test("ceci est un test !!", innerPadding)
-        //affichageUnFilm(games.get(0).id,games.get(0).name, covers.find { it.id == games[0].cover }?.url,games.get(0).genres,innerPadding)
         affichageTousFilms(innerPadding,backStack,{gameId->backStack.add(GameExample(gameId))})
+        SearchBar()
     }
 }
 
