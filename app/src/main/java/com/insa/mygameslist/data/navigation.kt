@@ -10,7 +10,6 @@ import com.insa.mygameslist.scaffoldPrincipal
 import com.insa.mygameslist.ScaffoldSecondaire
 import kotlinx.serialization.Serializable
 
-
 // Define keys that will identify content
 @Serializable
 data object GameList

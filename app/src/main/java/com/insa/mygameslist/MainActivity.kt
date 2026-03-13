@@ -19,8 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,7 +30,7 @@ import com.insa.mygameslist.data.IGDB
 import com.insa.mygameslist.data.IGDB.games
 import com.insa.mygameslist.data.MyApp
 import com.insa.mygameslist.data.SearchScreen
-import com.insa.mygameslist.data.affichageTousFilms
+import com.insa.mygameslist.data.ToggleIconButton
 import com.insa.mygameslist.data.ecranSecondaire
 import com.insa.mygameslist.ui.theme.MyGamesListTheme
 
@@ -58,7 +56,6 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun scaffoldPrincipal(backStack:SnapshotStateList<Any>) {
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -95,6 +92,7 @@ fun ScaffoldSecondaire(idGame : Long,backStack:SnapshotStateList<Any>) {
                     }
                 },
                 title = { games.find { it.id == idGame }?.name?.let { Text(it) } }
+
             )
         },
 
@@ -103,7 +101,9 @@ fun ScaffoldSecondaire(idGame : Long,backStack:SnapshotStateList<Any>) {
             .fillMaxSize()
             .background(Color(android.graphics.Color.parseColor("#BFCAF2")))
     )
+
     { innerPadding ->
-        ecranSecondaire(idGame,innerPadding,backStack)
+        ToggleIconButton(idGame)
+        ecranSecondaire(idGame, innerPadding, backStack)
     }
 }

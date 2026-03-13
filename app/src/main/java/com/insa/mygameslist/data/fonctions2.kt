@@ -1,6 +1,5 @@
 package com.insa.mygameslist.data
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,11 +8,11 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Text
@@ -25,20 +24,18 @@ import coil3.compose.AsyncImage
 import com.insa.mygameslist.data.IGDB.covers
 import com.insa.mygameslist.data.IGDB.games
 import com.insa.mygameslist.data.IGDB.genres
-import com.insa.mygameslist.data.IGDB.platforms
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
-import java.time.format.TextStyle
 
 
 @Composable
@@ -66,15 +63,19 @@ fun affichageUnFilm(idFilm : Long, nomFilm : String?, URL : String?, Genres : Li
                 modifier = Modifier.size(70.dp)
             )
         }
-        Column{
+        Column(modifier = Modifier.weight(1f)){
             if (nomFilm != null) {
-                Text(nomFilm,fontWeight = FontWeight.Bold)
+                Text(nomFilm,fontWeight = FontWeight.Bold,fontSize = 15.sp)
             }
-            Text(afficherGenres)
+            Text(afficherGenres,fontSize = 10.sp)
+        }
+        Column{
+            ToggleIconButton(idFilm)
+            }
+
         }
 
     }
-}
 
 @Composable
 fun affichageTousFilms(pad: PaddingValues,backStack : SnapshotStateList<Any>,onGameClick:(Long)->Unit) {
@@ -96,7 +97,6 @@ fun ecranSecondaire(identifiant: Long, pad: PaddingValues, backStack: SnapshotSt
 
     val game1 = games.find { it.id == identifiant }
 
-
     Column( // Ligne du nom
         modifier = Modifier
             .padding(top = pad.calculateTopPadding())
@@ -105,18 +105,24 @@ fun ecranSecondaire(identifiant: Long, pad: PaddingValues, backStack: SnapshotSt
             .verticalScroll(rememberScrollState())
     ) {
 
-        //NOM DU JEU
-        Spacer(modifier = Modifier.height(20.dp))
-        game1?.name?.let {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text(
-                it,
-                modifier = Modifier.fillMaxWidth(),
-                fontSize = 35.sp,
+                text = game1?.name ?: "",
+                fontSize = 25.sp,
                 fontWeight = FontWeight.Bold,
                 textDecoration = TextDecoration.Underline,
-                textAlign = TextAlign.Center
+                modifier = Modifier.weight(1f)
             )
+            Spacer(modifier = Modifier.width(8.dp))
+            ToggleIconButton(game1?.id ?: 0)
         }
+
+        // NOM DU FILM
+
 
         // COVER DU JEU
         Spacer(modifier = Modifier.height(20.dp))
