@@ -21,6 +21,8 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.insa.mygameslist.data.IGDB.covers
+import com.insa.mygameslist.data.IGDB.games
+import com.insa.mygameslist.data.IGDB.genres
 import kotlin.Any
 @Composable
 fun SearchScreen(pad: PaddingValues, backStack: SnapshotStateList<Any>, onGameClick: (Long) -> Unit) {
@@ -30,8 +32,25 @@ fun SearchScreen(pad: PaddingValues, backStack: SnapshotStateList<Any>, onGameCl
         if (query.isEmpty()) {
             affichageTousFilms(pad, backStack, onGameClick)
         }else{
-            val gamesToShow = IGDB.games.filter {
-                it.name.contains(query, ignoreCase = true)
+            val gamesToShow = IGDB.games.filter { game ->
+                //on garde seulement les jeux qui matchent
+                val matchNom = game.name.contains(query, ignoreCase = true)
+                //tri par genre
+                val matchGenre = game.genres.any { genreId ->
+                    IGDB.genres.find { it.id == genreId }?.name?.contains(
+                        query,
+                        ignoreCase = true
+                    ) == true
+                }
+
+                val matchPlatform = game.platforms.any { platformId ->
+                    IGDB.platforms.find {
+                        it.id == platformId
+                    }?.name?.contains(query, ignoreCase = true) == true
+                }
+
+                matchPlatform || matchGenre || matchNom
+
             }
 
             LazyColumn(
