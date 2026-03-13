@@ -1,13 +1,9 @@
 package com.insa.mygameslist.data
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,7 +14,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -29,7 +24,7 @@ import com.insa.mygameslist.data.IGDB.covers
 import kotlin.Any
 @Composable
 fun SearchScreen(pad: PaddingValues, backStack: SnapshotStateList<Any>, onGameClick: (Long) -> Unit) {
-    var query by remember { mutableStateOf("") }
+    var query by rememberSaveable { mutableStateOf("") }
     Column {
         TextField(value = query, onValueChange = { query = it }, placeholder = { Text("Search") }, modifier = Modifier.fillMaxWidth())
         if (query.isEmpty()) {
