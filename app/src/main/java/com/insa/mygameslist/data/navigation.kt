@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
-import com.insa.mygameslist.MonBeauScaffoldRoiDsScaffolds
+import com.insa.mygameslist.scaffoldPrincipal
 import com.insa.mygameslist.ScaffoldSecondaire
 import kotlinx.serialization.Serializable
 
@@ -25,7 +25,7 @@ fun MyApp() {
         onBack = { backStack.removeLastOrNull() },
         entryProvider = { key ->
             when (key) {
-                is GameList -> NavEntry(key) { MonBeauScaffoldRoiDsScaffolds(backStack) }
+                is GameList -> NavEntry(key) { scaffoldPrincipal(backStack) }
                 is GameExample -> NavEntry(key) {
                     ScaffoldSecondaire(key.Gameid,backStack)
                 }
