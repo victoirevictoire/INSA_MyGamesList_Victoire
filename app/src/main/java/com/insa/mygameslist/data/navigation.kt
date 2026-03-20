@@ -17,16 +17,17 @@ data object GameList
 data class GameExample(val Gameid: Long) // destination with arguments
 
 @Composable
-fun MyApp() {
+fun MyApp(dao: JeuxDao) {
     val backStack = remember { mutableStateListOf<Any>(GameList) }
+
     NavDisplay(
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
         entryProvider = { key ->
             when (key) {
-                is GameList -> NavEntry(key) { scaffoldPrincipal(backStack) }
+                is GameList -> NavEntry(key) { scaffoldPrincipal(backStack,dao) }
                 is GameExample -> NavEntry(key) {
-                    ScaffoldSecondaire(key.Gameid,backStack)
+                    ScaffoldSecondaire(key.Gameid, backStack, dao)
                 }
                 else -> NavEntry(Unit) { Text("Unknown") }
             }

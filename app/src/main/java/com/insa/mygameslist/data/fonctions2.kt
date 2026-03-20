@@ -1,5 +1,4 @@
 package com.insa.mygameslist.data
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,9 +36,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 
-
 @Composable
-fun affichageUnFilm(idFilm : Long, nomFilm : String?, URL : String?, Genres : List<Long>,pad : PaddingValues,backStack : SnapshotStateList<Any>,onClick:()->Unit={}):Unit{
+fun affichageUnFilm(idFilm: Long, nomFilm: String?, URL: String?, Genres: List<Long>, pad: PaddingValues, backStack: SnapshotStateList<Any>, onClick: () -> Unit = {}, dao: JeuxDao):Unit{
 
         var afficherGenres : String ="Genres : "
         for (idGenre in Genres){
@@ -70,22 +68,21 @@ fun affichageUnFilm(idFilm : Long, nomFilm : String?, URL : String?, Genres : Li
             Text(afficherGenres,fontSize = 10.sp)
         }
         Column{
-            ToggleIconButton(idFilm)
+            ToggleIconButton(idFilm,dao)
             }
-
         }
 
     }
 
 @Composable
-fun affichageTousFilms(pad: PaddingValues,backStack : SnapshotStateList<Any>,onGameClick:(Long)->Unit) {
+fun affichageTousFilms(pad: PaddingValues,backStack : SnapshotStateList<Any>,onGameClick:(Long)->Unit,dao: JeuxDao) {
     LazyColumn(
         modifier = Modifier
             .padding(pad)
             .background(Color(android.graphics.Color.parseColor("#FFFFFF")))
     ) {
         items(games) { game ->
-            affichageUnFilm(game.id, game.name, covers.find { it.id == game.cover }?.url,game.genres, pad,backStack, {onGameClick(game.id)})
+            affichageUnFilm(game.id, game.name, covers.find { it.id == game.cover }?.url,game.genres, pad,backStack, {onGameClick(game.id)},dao)
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
@@ -93,7 +90,7 @@ fun affichageTousFilms(pad: PaddingValues,backStack : SnapshotStateList<Any>,onG
 
 
 @Composable
-fun ecranSecondaire(identifiant: Long, pad: PaddingValues, backStack: SnapshotStateList<Any>) {
+fun ecranSecondaire(identifiant: Long, pad: PaddingValues, backStack: SnapshotStateList<Any>,dao: JeuxDao) {
 
     val game1 = games.find { it.id == identifiant }
 
@@ -118,7 +115,7 @@ fun ecranSecondaire(identifiant: Long, pad: PaddingValues, backStack: SnapshotSt
                 modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            ToggleIconButton(game1?.id ?: 0)
+            ToggleIconButton(game1?.id ?: 0,dao)
         }
 
         // NOM DU FILM

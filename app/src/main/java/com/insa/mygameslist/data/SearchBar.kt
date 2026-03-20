@@ -25,12 +25,12 @@ import com.insa.mygameslist.data.IGDB.games
 import com.insa.mygameslist.data.IGDB.genres
 import kotlin.Any
 @Composable
-fun SearchScreen(pad: PaddingValues, backStack: SnapshotStateList<Any>, onGameClick: (Long) -> Unit) {
+fun SearchScreen(pad: PaddingValues, backStack: SnapshotStateList<Any>, onGameClick: (Long) -> Unit,dao: JeuxDao) {
     var query by rememberSaveable { mutableStateOf("") }
     Column {
         TextField(value = query, onValueChange = { query = it }, placeholder = { Text("Search") }, modifier = Modifier.fillMaxWidth())
         if (query.isEmpty()) {
-            affichageTousFilms(pad, backStack, onGameClick)
+            affichageTousFilms(pad, backStack, onGameClick,dao)
         }else{
             val gamesToShow = IGDB.games.filter { game ->
                 //on garde seulement les jeux qui matchent
@@ -60,7 +60,7 @@ fun SearchScreen(pad: PaddingValues, backStack: SnapshotStateList<Any>, onGameCl
             ) {
 
                 items(gamesToShow) { game ->
-                    affichageUnFilm(game.id, game.name, covers.find { it.id == game.cover }?.url, game.genres, pad, backStack) { onGameClick(game.id) }
+                    affichageUnFilm(game.id, game.name, covers.find { it.id == game.cover }?.url, game.genres, pad,backStack, { onGameClick(game.id) },dao)
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }
