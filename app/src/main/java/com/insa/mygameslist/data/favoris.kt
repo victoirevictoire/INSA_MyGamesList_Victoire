@@ -37,7 +37,7 @@ fun ToggleIconButton(idJeu: Long, dao: JeuxDao) {
                 if (estFavori) com.insa.mygameslist.R.drawable.etoile_remplie
                 else com.insa.mygameslist.R.drawable.etoile_vide
             ),
-            contentDescription = null,
+            contentDescription = "icone étoile",
             tint = if (estFavori) Color(0xFFFFA500) else Color.Gray
         )
     }

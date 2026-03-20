@@ -33,7 +33,6 @@ import com.insa.mygameslist.data.JeuxDao
 import com.insa.mygameslist.data.JeuxDatabase
 import com.insa.mygameslist.data.MyApp
 import com.insa.mygameslist.data.SearchScreen
-import com.insa.mygameslist.data.ToggleIconButton
 import com.insa.mygameslist.data.ecranSecondaire
 import com.insa.mygameslist.data.id_jeux_favoris
 import com.insa.mygameslist.ui.theme.MyGamesListTheme

@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.insa.mygameslist.data.IGDB.covers
 import com.insa.mygameslist.data.IGDB.games
@@ -28,7 +29,23 @@ import kotlin.Any
 fun SearchScreen(pad: PaddingValues, backStack: SnapshotStateList<Any>, onGameClick: (Long) -> Unit,dao: JeuxDao) {
     var query by rememberSaveable { mutableStateOf("") }
     Column {
-        TextField(value = query, onValueChange = { query = it }, placeholder = { Text("Search") }, modifier = Modifier.fillMaxWidth())
+        TextField(
+            value = query,
+            onValueChange = { query = it },
+            placeholder = { Text("Search") },
+            modifier = Modifier.fillMaxWidth(),
+            trailingIcon = {
+                if (query.isNotEmpty()) {
+                    androidx.compose.material3.IconButton(onClick = { query = "" }) {
+                        androidx.compose.material3.Icon(
+                           painter = painterResource(com.insa.mygameslist.R.drawable.croix),
+                            contentDescription = "Clear"
+                        )
+                    }
+                }
+            }
+        )
+
         if (query.isEmpty()) {
             affichageTousFilms(pad, backStack, onGameClick,dao)
         }else{

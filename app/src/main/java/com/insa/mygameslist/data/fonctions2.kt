@@ -1,4 +1,5 @@
 package com.insa.mygameslist.data
+import android.graphics.Color.red
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +31,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -50,14 +55,15 @@ fun affichageUnFilm(idFilm: Long, nomFilm: String?, URL: String?, Genres: List<L
             .padding(8.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(size = 25.dp))
-            .background(Color.LightGray)
+            .background(color = Color.Green) //moche mais contrasté pour l'accessibilité
             .clickable(onClick=onClick)
+            .semantics { role = Role.Button } // on précjse le rôle pour l'accessibilité
 
     ){
         Column{
             AsyncImage(
                 model="https:"+ URL,
-                contentDescription = null,
+                contentDescription = "affichage du film $nomFilm",
                 modifier = Modifier.size(70.dp)
             )
         }
@@ -129,7 +135,7 @@ fun ecranSecondaire(identifiant: Long, pad: PaddingValues, backStack: SnapshotSt
                 .fillMaxWidth()
                 .size(200.dp),
 
-            contentDescription = null
+            contentDescription = "couverture du jeu $game1?.name ?:"
         )
 
         // GENRE DU JEU
@@ -165,7 +171,9 @@ fun ecranSecondaire(identifiant: Long, pad: PaddingValues, backStack: SnapshotSt
         }
 
         LazyRow(
+            modifier = Modifier.semantics { contentDescription = "Plateformes disponibles" },
             horizontalArrangement = Arrangement.spacedBy(4.dp)
+
         ) {
             items(platforms) { plat ->
                 AsyncImage(
